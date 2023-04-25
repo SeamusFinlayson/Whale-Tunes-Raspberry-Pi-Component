@@ -1,0 +1,9 @@
+# file types
+*.layout 
+*.depend 
+*.wav
+*.dat
+
+#directories
+bin/ 
+obj/
