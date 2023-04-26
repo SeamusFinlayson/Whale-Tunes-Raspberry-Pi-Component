@@ -105,7 +105,7 @@ class waveFileClass:
     def getInputFileLength(self, dataFileName):
         fileStats = stat(dataFileName)
         self.AUDIO_DURATION = fileStats.st_size / self.SAMPLE_RATE / (self.BITS_PER_SAMPLE / 8)
-        print("Length in time is: ", self.AUDIO_DURATION)
+        print("Recording duration: ", self.AUDIO_DURATION, " seconds")
         return self.AUDIO_DURATION
 
 # sample code - make file

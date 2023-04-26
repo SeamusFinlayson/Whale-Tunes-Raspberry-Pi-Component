@@ -1,6 +1,9 @@
+# File Name: WhaleTunesPython.py
+# Author: Seamus Finlayson
+# Date: 2023-04-25
+
 #default libraries
 from datetime import datetime
-from picamera import PiCamera
 from time import sleep
 import os
 
@@ -12,27 +15,33 @@ from waveFileClass import waveFileClass
 from firebaseApiConfig import firebaseConfig
 
 #startup dialog
-print("running...")
+print("Running...")
 
+#firebase setup
 firebase = pyrebase.initialize_app(firebaseConfig)
 storage = firebase.storage()
 
-#make file
-outputFileName = "WhaleSoundsTest.wav"
-rawDataFileName = "WhaleData.dat"
-waveFileClass(16000, rawDataFileName, outputFileName).createFile()
+#make wave file and give name with time and date
+now = datetime.now()
+dateTimeString = now.strftime("%Y-%m-%d at %H:%M:%S")
 
-#upload file
-# print("pushed")
-# now = datetime.now()
-# dt = now.strftime("%d%m%Y%H:%M:%S")
-# name = dt+".jpg"
-# camera.capture(name)
-# print(name+" saved")
-storage.child(outputFileName).put(outputFileName)
-# print("Image sent")
+outputFileName = "Whale Recording from " + dateTimeString + ".wav"
+
+outputpath = os.path.join("./Recordings", outputFileName)
+
+#set input file
+rawDataFileName = "WhaleData.dat"
+
+waveFileClass(16000, rawDataFileName, outputpath).createFile()
+print("Recording saved as: ", outputpath)
+
+# upload file
+storage.child(outputFileName).put(outputpath)
+print("File uploaded.")
+
+#remove file
 # os.remove(name)
 # print("File Removed")
 # sleep(2)
 
-print("done")
+print("Done.")
