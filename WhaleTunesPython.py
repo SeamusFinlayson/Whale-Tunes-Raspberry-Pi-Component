@@ -1,23 +1,26 @@
+#default libraries
 from datetime import datetime
 from picamera import PiCamera
 from time import sleep
 import os
 
+#additional libraries
 import pyrebase
+
+#my files
+from waveFileClass import waveFileClass
+from firebaseApiConfig import firebaseConfig
 
 #startup dialog
 print("running...")
 
-#firebase setup
-firebaseConfig = {
-    #add information here, do not push to github, it is sensitive
-}
 firebase = pyrebase.initialize_app(firebaseConfig)
 storage = firebase.storage()
 
 #make file
-myfile = open("myfile","w")
-myfile.close
+outputFileName = "WhaleSoundsTest.wav"
+rawDataFileName = "WhaleData.dat"
+waveFileClass(16000, rawDataFileName, outputFileName).createFile()
 
 #upload file
 # print("pushed")
@@ -26,8 +29,7 @@ myfile.close
 # name = dt+".jpg"
 # camera.capture(name)
 # print(name+" saved")
-name = "pyTest.wav"
-storage.child(name).put("66038001.wav")
+storage.child(outputFileName).put(outputFileName)
 # print("Image sent")
 # os.remove(name)
 # print("File Removed")
