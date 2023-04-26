@@ -4,6 +4,9 @@
 *.wav
 *.dat
 
-#directories
+# specific files
+firebaseApiConfig.py
+
+# directories
 bin/ 
 obj/
