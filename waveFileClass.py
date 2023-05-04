@@ -94,7 +94,7 @@ class waveFileClass:
         with open(self.FILE_NAME, "ab") as header, open(self.RAW_DATA_FILE, "rb") as rawData:
             header.write(rawData.read())
 
-        print("File Created")
+        # print("File Created")
 
     def writeIntToFile(self, value, numBytes):
         value = int(value)
@@ -104,7 +104,7 @@ class waveFileClass:
 
     def getInputFileLength(self, dataFileName):
         fileStats = stat(dataFileName)
-        self.AUDIO_DURATION = fileStats.st_size / self.SAMPLE_RATE / (self.BITS_PER_SAMPLE / 8)
+        self.AUDIO_DURATION = int(fileStats.st_size / self.SAMPLE_RATE / (self.BITS_PER_SAMPLE / 8))
         print("Recording duration: ", self.AUDIO_DURATION, " seconds")
         return self.AUDIO_DURATION
 
