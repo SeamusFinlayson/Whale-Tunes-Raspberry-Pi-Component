@@ -35,9 +35,10 @@ state = WAITING_STATE
 
 #uart code symbols
 ESCAPE_CHAR = "ffff"
-SOF_CHAR = "ffee"
+SOF_CHAR = "ffee" #start of file character
 EOF_CHAR = "fffe" #end of file character
 
+#default file name
 fileName = "error getting name"
 
 while True:
@@ -52,7 +53,6 @@ while True:
             
             #indicate state change
             print("\nWaiting for hydrophone...")
-            
             
             #check for escape character
             byte_array = ser.read(2)
@@ -136,7 +136,6 @@ while True:
             #indicate state change
             print("\nUploading data to firebase...")
             
-            #
             #audioDataFileName = "WhaleData.dat" #testing only
             waveFileName = fileName + ".wav"
             waveFilePath = os.path.join("./Recordings", waveFileName)
