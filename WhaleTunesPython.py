@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 import os
 import sys
-
+ 
 #additional libraries
 import pyrebase
 import serial
@@ -20,7 +20,7 @@ from firebaseApiConfig import firebaseConfig
 print("Running...")
 
 #setup serial
-ser = serial.Serial("/dev/ttyS0", 115200)
+ser = serial.Serial("/dev/serial0", 430000)
 print("Using serial: ", ser.name)
 
 #firebase setup
@@ -117,6 +117,9 @@ while True:
                             quit = True
                             print("End of data character received.")
                             
+                            #next state
+                            state = UPLOADING_DATA_STATE  
+                            
                         else:
                             print("ERROR bad data received")
                             sys.exit(1)
@@ -127,9 +130,6 @@ while True:
                         intData = int.from_bytes(byte_array, "big", signed="True")
                         bytesData = bytearray(intData.to_bytes(2, "little", signed=True))
                         f.write(bytesData)
-            
-            #next state
-            state = UPLOADING_DATA_STATE  
         
         elif state == UPLOADING_DATA_STATE:
             
@@ -140,7 +140,7 @@ while True:
             waveFileName = fileName + ".wav"
             waveFilePath = os.path.join("./Recordings", waveFileName)
 
-            waveFileClass(16000, audioDataPath, waveFilePath).createFile()
+            waveFileClass(8000, audioDataPath, waveFilePath).createFile()
             print("Recording saved as: ", waveFilePath)
 
             # upload file
